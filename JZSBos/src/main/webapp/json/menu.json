@@ -1,0 +1,14 @@
+[
+		{ "id":"11", "pId":"0", "name":"基础数据"},
+		{ "id":"112", "pId":"11", "name":"取派员设置",  "page":"base/staff.action"},
+		{ "id":"113", "pId":"11", "name":"区域设置","page":"base/region.action"},
+		{ "id":"114", "pId":"11", "name":"管理分区", "page":"base/subarea.action"},
+		{ "id":"115", "pId":"11", "name":"管理定区/调度排班","page":"base/decidedzone.action"},
+		{ "id":"12", "pId":"0", "name":"受理"},
+		{ "id":"121", "pId":"12", "name":"业务受理" ,"page":"qupai/noticebill_add.action"},
+		{ "id":"122", "pId":"12", "name":"工作单快速录入" ,"page":"qupai/quickworkorder.action"},
+		{ "id":"124", "pId":"12", "name":"工作单导入" ,"page":"qupai/workorderimport.action"},
+		{ "id":"13", "pId":"0", "name":"调度"},
+		{ "id":"131", "pId":"13", "name":"查台转单","page":""},
+		{ "id":"132", "pId":"13", "name":"人工调度","page":"qupai/diaodu.action"}
+]

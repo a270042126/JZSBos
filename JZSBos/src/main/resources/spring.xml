@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 加载jdbc属性文件 -->
+	<!-- 引入属性文件 -->
+  <context:property-placeholder location="classpath:config.properties" />
+	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${driverClassName}"/>
+	    <property name="jdbcUrl" value="${jdbc_url}" />
+	    <property name="user" value="${jdbc_username}" />
+	    <property name="password" value="${jdbc_password}" />
+	   <!--   <property name="connection.useUnicode" value="${connection.useUnicode}"/>
+		<property name="connection.characterEncoding" value="${connection.characterEncoding}"/>
+        <property name="hibernate.dialect" value="${hibernate.dialect}"/> -->
+	    <!-- 初始化连接大小 -->
+	    <property name="initialPoolSize" value="3" />
+	    <!-- 连接池中保留的最小连接数 -->
+	    <property name="minPoolSize" value="10" />
+	    <!-- 连接池最大使用连接数量 -->
+	    <property name="maxPoolSize" value="500" />
+	    <!--最大空闲时间，60秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->
+	    <property name="maxIdleTime" value="60" /> 
+	  <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->  
+		<property name="acquireIncrement" value="3" />  
+<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements 
+属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。 如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0-->
+		<property name="maxStatements" value="1000" />  
+	    <!--每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->   
+		<property name="idleConnectionTestPeriod" value="10"/>
+        
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->  
+		<property name="acquireRetryAttempts" value="30" />  
+	<!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效 保留，并在下次调用getConnection()的时候继续尝试获取连接。
+	如果设为true，那么在尝试 获取连接失败后该数据源将申明已断开并永久关闭。Default: false-->
+		<property name="breakAfterAcquireFailure" value="false" />  
+	<!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的 时候都将校验其有效性。
+	建议使用idleConnectionTestPeriod或automaticTestTable 等方法来提升连接测试的性能。Default: false -->
+		<property name="testConnectionOnCheckout" value="false" /> 
+  </bean>
+  <!-- 配置hibernate session工厂 -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+        <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+        <prop key="hibernate.show_sql">${hibernate.show_sql}</prop> 
+        <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>   
+		<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>     
+      </props>
+    </property>
+	<property name="mappingLocations">
+		<value>classpath:/com/mycompany/domain/*.hbm.xml </value>
+	</property>
+  </bean>
+  
+  	<!-- 默认的注解映射的支持 -->
+    <!-- <context:component-scan base-package="com.mycompany" use-default-filters="true">  自动扫描该包路径下的所有注解
+ 		<context:include-filter type="regex" expression="com\.mycompany\.service\.impl\..*"/>
+ 		<context:include-filter type="regex" expression="com\.mycompany\.dao\.impl\..*"/>
+ 		<context:include-filter type="regex" expression="com\.mycompany\.web\..*"/>
+	 </context:component-scan>
+	 <context:annotation-config/> -->
+	 <!-- 组件扫描 -->
+	 <context:component-scan base-package="com.mycompany"/>
+	<!-- 引入注解解析器 -->
+	<context:annotation-config/>
+     <!-- 事务注解 -->
+	<tx:annotation-driven />  
+   	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" /> 
+	</bean>
+	
+	<!-- 配置远程服务的代理对象 -->
+	<bean id="customerService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<!-- 注入接口类型 -->
+		<property name="serviceInterface" value="com.mycompany.crm.service.CustomerService"/>
+		<!-- 服务访问路径 -->
+		<property name="serviceUrl" value="http://localhost:8080/crm/remoting/customer"/>
+	</bean>
+
+
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<import resource="spring-shiro.xml"/> 
+</beans>
