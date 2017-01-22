@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
+<%@taglib uri="/struts-tags"  prefix="s"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,52 +27,51 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
-<!-- 导入ztree类库 -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css"
-	type="text/css" />
-<script
-	src="${pageContext.request.contextPath }/js/ztree/jquery.ztree.all-3.5.js"
-	type="text/javascript"></script>	
-<script type="text/javascript">
-	$(function(){
-		// 数据表格属性
-		$("#grid").datagrid({
-			toolbar : [
-				{
-					id : 'add',
-					text : '添加角色',
-					iconCls : 'icon-add',
-					handler : function(){
-						location.href='${pageContext.request.contextPath}/admin/role_add.action';
-					}
-				}           
-			],
-			url : '${pageContext.request.contextPath}/role/pageQuery.action',
-			columns : [[
-				{
-					field : 'id',
-					title : '编号',
-					width : 200
-				},
-				{
-					field : 'name',
-					title : '名称',
-					width : 200
-				}, 
-				{
-					field : 'description',
-					title : '描述',
-					width : 200
-				} 
-			]]
-		});
-	});
-</script>	
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'center'">
-		<table id="grid"></table>
+		<table class="easyui-datagrid" fit="true" nowrap="false">
+			<thead>
+				<tr>
+					<th data-options="field:'id',width:120">任务编号</th>
+					<th data-options="field:'name',width:120">任务名称</th>
+					<th data-options="field:'data',width:520">业务数据</th>
+					<th data-options="field:'pick',width:120">办理任务</th>
+				</tr>
+			</thead>
+			<script type="text/javascript">
+				function showData(taskId){
+					$.post("${pageContext.request.contextPath}/task/showData.action",{"taskId":taskId},function(data){
+						$("#div"+taskId).html(data);
+					});
+				}
+				
+				function toggleData(taskId){
+						$("#div"+taskId).toggle();
+				}
+			</script>
+			<tbody>
+				<s:iterator value="list" var="task">
+					<tr>
+						<td><s:property value="id"/> </td>
+						<td><s:property value="name"/></td>
+						<td>
+							<a onclick="toggleData('${id}')" class="easyui-linkbutton">查看业务数据</a>
+							<div style="display: none" id="div${id }">
+								<script type="text/javascript">
+									showData('${id}');
+								</script>
+							</div>
+						</td>
+						<td>
+							<s:a action="task/%{taskDefinitionKey}" namespace="/" cssClass="easyui-linkbutton">办理任务
+								<s:param name="taskId" value="id"></s:param>
+							</s:a>
+						</td>
+					</tr>
+				</s:iterator>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

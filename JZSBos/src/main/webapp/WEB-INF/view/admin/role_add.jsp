@@ -51,7 +51,7 @@
 		};
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			url : '${pageContext.request.contextPath}/function/listajax.action',
 			type : 'POST',
 			dataType : 'text',
 			success : function(data) {
@@ -67,7 +67,20 @@
 		
 		// 点击保存
 		$('#save').click(function(){
-			location.href='${pageContext.request.contextPath}/page_admin_privilege.action';
+			var v = $("#roleForm").form("validate");
+			if(v){
+				var treeObj = $.fn.zTree.getZTreeObj("functionTree");//获得页面中的ztree对象
+				var nodes = treeObj.getCheckedNodes(true);//在提交表单之前将选中的checkbox收集
+				var array = new Array();
+				for(var i=0;i<nodes.length;i++){
+					var id = nodes[i].id;//权限id
+					array.push(id);
+				}
+				var ids = array.join(",");//1,2,3,4,5
+				$("input[name=ids]").val(ids);
+				//alert(ids);
+				$("#roleForm").submit();
+			}
 		});
 	});
 </script>	
@@ -79,7 +92,8 @@
 			</div>
 		</div>
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form id="roleForm" method="post">
+			<form id="roleForm" method="post" action="${pageContext.request.contextPath }/role/add.action">
+			<input type="hidden" name="ids">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">角色信息</td>

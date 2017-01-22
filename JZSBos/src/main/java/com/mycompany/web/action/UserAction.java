@@ -27,8 +27,7 @@ import com.opensymphony.xwork2.ActionContext;
 @Controller
 @Scope("prototype")
 @Results({  
-//	@Result(name="index",location = "/common/index.jsp")
-	//@Result(name="success", type="redirectAction", params = {"actionName" , "user"})  
+	@Result(name="list",location = "../admin/userlist.jsp")
 })  
 public class UserAction extends BaseAction<User>{
 
@@ -102,6 +101,29 @@ public class UserAction extends BaseAction<User>{
 		//销毁session
 		ActionContext.getContext().getSession().clear();
 		return "login";
+	}
+	
+	/**
+	 * 用户分页查询
+	 * @throws IOException 
+	 */
+	@Action(value="/user/pageQuery",results={@Result(type="json",
+			params={"root","pageBean","excludeProperties","rows.*\\.noticebills,rows.*\\.roles,detachedCriteria"})})
+	public String pageQuery(){
+		userService.pageQuery(pageBean);
+		return SUCCESS;
+	}
+	
+	//接收角色数据
+	private String[] roleIds;
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
+	
+	@Action("/user/add")
+	public String add(){
+		userService.save(model,roleIds);
+		return "list";
 	}
 
 }

@@ -5,18 +5,18 @@
 <hibernate-mapping package="com.mycompany.domain">
     <class name="Decidedzone" table="bc_decidedzone" >
         <id name="id" type="java.lang.String">
-            <column name="id" length="32" />
+            <column name="id" length="36" />
             <generator class="assigned" />
         </id>
         <many-to-one lazy="false" name="staff" class="Staff" fetch="select">
-            <column name="staff_id" length="32" />
+            <column name="staff_id" length="36" />
         </many-to-one>
         <property name="name" type="java.lang.String">
             <column name="name" length="30" />
         </property>
         <set name="subareas" inverse="true">
             <key>
-                <column name="decidedzone_id" length="32" />
+                <column name="decidedzone_id" length="36" />
             </key>
             <one-to-many class="Subarea" />
         </set>

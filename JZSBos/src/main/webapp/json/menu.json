@@ -10,5 +10,9 @@
 		{ "id":"124", "pId":"12", "name":"工作单导入" ,"page":"qupai/workorderimport.action"},
 		{ "id":"13", "pId":"0", "name":"调度"},
 		{ "id":"131", "pId":"13", "name":"查台转单","page":""},
-		{ "id":"132", "pId":"13", "name":"人工调度","page":"qupai/diaodu.action"}
+		{ "id":"132", "pId":"13", "name":"人工调度","page":"qupai/diaodu.action"},
+		{ "id":"14", "pId":"0", "name":"物流配送流程管理"},
+		{ "id":"141", "pId":"14", "name":"查看我的组任务","page":"task/findGroupTask.action"},
+		{ "id":"142", "pId":"14", "name":"查看个人任务","page":"task/findPersonalTask.action"},
+		{ "id":"143", "pId":"14", "name":"启动配送流程","page":"workordermanage/list.action"}
 ]

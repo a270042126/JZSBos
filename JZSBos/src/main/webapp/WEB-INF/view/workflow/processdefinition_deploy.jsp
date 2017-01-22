@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>流程定义文件上传</title>
 <!-- 导入jquery核心类库 -->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/js/jquery-1.8.3.js"></script>
@@ -26,52 +27,25 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
-<!-- 导入ztree类库 -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css"
-	type="text/css" />
-<script
-	src="${pageContext.request.contextPath }/js/ztree/jquery.ztree.all-3.5.js"
-	type="text/javascript"></script>	
-<script type="text/javascript">
-	$(function(){
-		// 数据表格属性
-		$("#grid").datagrid({
-			toolbar : [
-				{
-					id : 'add',
-					text : '添加角色',
-					iconCls : 'icon-add',
-					handler : function(){
-						location.href='${pageContext.request.contextPath}/admin/role_add.action';
-					}
-				}           
-			],
-			url : '${pageContext.request.contextPath}/role/pageQuery.action',
-			columns : [[
-				{
-					field : 'id',
-					title : '编号',
-					width : 200
-				},
-				{
-					field : 'name',
-					title : '名称',
-					width : 200
-				}, 
-				{
-					field : 'description',
-					title : '描述',
-					width : 200
-				} 
-			]]
-		});
-	});
-</script>	
 </head>
-<body class="easyui-layout">
-	<div data-options="region:'center'">
-		<table id="grid"></table>
-	</div>
+<body>
+<s:form action="/processDefinition/deploy.action" theme="simple"
+		 method="post" enctype="multipart/form-data" id="uploadForm">
+	<table class="table-edit" width="100%" >
+		<tr class="title"><td colspan="2">发布新流程</td></tr>
+		<tr>
+			<td width="200">浏览流程定义zip压缩文件</td>
+			<td>
+				<input type="file" name="zipFile" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<a id="btn" href="javascript:$('#uploadForm').submit();"
+					 class="easyui-linkbutton" data-options="iconCls:'icon-save'">发布新流程</a>  
+			</td>
+		</tr>
+	</table>
+</s:form>
 </body>
 </html>

@@ -52,7 +52,7 @@
   <!-- 解决Hibernate延迟加载问题 -->
   <filter>
   	<filter-name>openSession</filter-name>
-  	<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+  	<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
   </filter>
   <filter-mapping>
   	<filter-name>openSession</filter-name>

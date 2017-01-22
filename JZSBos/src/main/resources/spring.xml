@@ -49,7 +49,7 @@
 		<property name="testConnectionOnCheckout" value="false" /> 
   </bean>
   <!-- 配置hibernate session工厂 -->
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="hibernateProperties">
       <props>
@@ -77,8 +77,9 @@
 	<!-- 引入注解解析器 -->
 	<context:annotation-config/>
      <!-- 事务注解 -->
-	<tx:annotation-driven />  
-   	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<tx:annotation-driven transaction-manager="transactionManager"  proxy-target-class="true"/>
+	
+   	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" /> 
 	</bean>
 	
@@ -90,7 +91,9 @@
 		<property name="serviceUrl" value="http://localhost:8080/crm/remoting/customer"/>
 	</bean>
 
-
+	<!-- 使用cglib -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
 	<import resource="spring-shiro.xml"/> 
+	<import resource="spring-activiti.xml"/> 
 </beans>

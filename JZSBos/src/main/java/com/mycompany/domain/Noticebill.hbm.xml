@@ -5,17 +5,17 @@
 <hibernate-mapping package="com.mycompany.domain">
     <class name="Noticebill" table="qp_noticebill" >
         <id name="id" type="java.lang.String">
-            <column name="id" length="32" />
-            <generator class="uuid" />
+            <column name="id" length="36" />
+            <generator class="uuid2" />
         </id>
         <many-to-one name="user" class="User" fetch="select">
-            <column name="user_id" length="32" />
+            <column name="user_id" length="36" />
         </many-to-one>
         <many-to-one name="staff" class="Staff" fetch="select">
-            <column name="staff_id" length="32" />
+            <column name="staff_id" length="36" />
         </many-to-one>
         <property name="customerId" type="java.lang.String">
-            <column name="customer_id" length="32" />
+            <column name="customer_id" length="36" />
         </property>
         <property name="customerName" type="java.lang.String">
             <column name="customer_name" length="20" />
@@ -55,7 +55,7 @@
         </property>
         <set name="workbills" inverse="true">
             <key>
-                <column name="noticebill_id" length="32" />
+                <column name="noticebill_id" length="36" />
             </key>
             <one-to-many class="Workbill" />
         </set>

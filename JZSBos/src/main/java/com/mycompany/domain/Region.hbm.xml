@@ -5,7 +5,7 @@
 <hibernate-mapping package="com.mycompany.domain">
     <class name="Region" table="bc_region" >
         <id name="id" type="java.lang.String">
-            <column name="id" length="32" />
+            <column name="id" length="36" />
             <generator class="assigned" />
         </id>
         <property name="province" type="java.lang.String">
@@ -28,7 +28,7 @@
         </property>
         <set name="subareas" inverse="true">
             <key>
-                <column name="region_id" length="32" />
+                <column name="region_id" length="36" />
             </key>
             <one-to-many class="Subarea" />
         </set>

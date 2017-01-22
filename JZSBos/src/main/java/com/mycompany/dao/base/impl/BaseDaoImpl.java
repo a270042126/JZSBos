@@ -8,11 +8,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
-import org.hibernate.query.Query;
 
 import com.mycompany.dao.base.BaseDao;
 import com.mycompany.utils.PageBean;
@@ -63,7 +63,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	public List<T> findAll() {// FROM User
 		String hql = "FROM  " + entityClass.getSimpleName();
-		return (List<T>) this.getSession().createQuery(hql).getResultList();
+		return (List<T>) this.getSession().createQuery(hql).list();
 	}
 
 	/**

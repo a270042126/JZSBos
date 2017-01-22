@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,52 +27,41 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
-<!-- 导入ztree类库 -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/js/ztree/zTreeStyle.css"
-	type="text/css" />
-<script
-	src="${pageContext.request.contextPath }/js/ztree/jquery.ztree.all-3.5.js"
-	type="text/javascript"></script>	
-<script type="text/javascript">
-	$(function(){
-		// 数据表格属性
-		$("#grid").datagrid({
-			toolbar : [
-				{
-					id : 'add',
-					text : '添加角色',
-					iconCls : 'icon-add',
-					handler : function(){
-						location.href='${pageContext.request.contextPath}/admin/role_add.action';
-					}
-				}           
-			],
-			url : '${pageContext.request.contextPath}/role/pageQuery.action',
-			columns : [[
-				{
-					field : 'id',
-					title : '编号',
-					width : 200
-				},
-				{
-					field : 'name',
-					title : '名称',
-					width : 200
-				}, 
-				{
-					field : 'description',
-					title : '描述',
-					width : 200
-				} 
-			]]
-		});
-	});
-</script>	
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'center'">
-		<table id="grid"></table>
+		<table class="easyui-datagrid" fit="true">
+			<thead>
+				<tr>
+					<th data-options="field:'id',width:120">编号</th>
+					<th data-options="field:'product',width:120">商品</th>
+					<th data-options="field:'arrivecity',width:120">到达城市</th>
+					<th data-options="field:'sender',width:120">发件人</th>
+					<th data-options="field:'receiver',width:120">收件人</th>
+					<th data-options="field:'receiverAddress',width:120">收件人地址</th>
+					<th data-options="field:'receiverTelephone',width:120">收件人电话</th>
+					<th data-options="field:'check',width:120">启动流程</th>
+				</tr>
+			</thead>
+			<tbody>
+				<s:iterator value="list" var="workOrderManage">
+				<tr>
+					<td> <s:property value="#workOrderManage.id"/> </td>
+					<td> <s:property value="#workOrderManage.product"/></td>
+					<td> <s:property value="#workOrderManage.arrivecity"/></td>
+					<td> <s:property value="#workOrderManage.sendername"/></td>
+					<td> <s:property value="#workOrderManage.receivername"/></td>
+					<td> <s:property value="#workOrderManage.receiveraddr"/></td>
+					<td> <s:property value="#workOrderManage.receiverphone"/></td>
+					<td> 
+						<s:a action="/start.action" cssClass="easyui-linkbutton" iconCls="icon-edit">启动
+							<s:param name="id" value="#workOrderManage.id"></s:param>
+						</s:a>
+					</td>
+				</tr>
+				</s:iterator>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

@@ -99,7 +99,7 @@
 			rownumbers : true,
 			striped : true,
 			toolbar : toolbar,
-			url : "${pageContext.request.contextPath }/json/users.json",
+			url : "${pageContext.request.contextPath }/user/pageQuery.action",
 			idField : 'id', 
 			frozenColumns : frozenColumns,
 			columns : columns,
@@ -121,8 +121,7 @@
 	}
 	
 	function doAdd() {
-		alert("添加用户");
-		location.href="${pageContext.request.contextPath}/page_admin_userinfo.action";
+		location.href="${pageContext.request.contextPath}/admin/userinfo.action";
 	}
 
 	function doView() {
