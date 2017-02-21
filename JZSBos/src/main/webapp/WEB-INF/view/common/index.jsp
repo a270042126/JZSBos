@@ -178,8 +178,8 @@
 	<div data-options="region:'north',border:false"
 		style="height:80px;padding:10px;background:url('${pageContext.request.contextPath }/images/header_bg.png') no-repeat right;">
 		<div>
-			<img src="${pageContext.request.contextPath }/images/logo.png"
-				border="0">
+			<%-- <img src="${pageContext.request.contextPath }/images/logo.png"
+				border="0"> --%>
 		</div>
 		<div id="sessionInfoDiv"
 			style="position: absolute;right: 5px;top:10px;">
@@ -233,7 +233,7 @@
 				<tr>
 					<td style="width: 300px;">
 						<div style="color: #999; font-size: 8pt;">
-							传智播客 | Powered by <a href="http://www.itcast.cn/">itcast.cn</a>
+							物流管理系统
 						</div>
 					</td>
 					<td style="width: *;" class="co1"><span id="online"

@@ -49,8 +49,8 @@ input[type=password] {
 <body>
 	<div
 		style="width: 900px; height: 50px; position: absolute; text-align: left; left: 50%; top: 50%; margin-left: -450px;; margin-top: -280px;">
-		<img src="${pageContext.request.contextPath }/images/logo.png" style="border-width: 0; margin-left: 0;" />
-		<span style="float: right; margin-top: 35px; color: #488ED5;">新BOS系统以宅急送开发的ERP系统为基础，致力于便捷、安全、稳定等方面的客户体验</span>
+	
+		<span style="float: right; margin-top: 35px; color: #488ED5;">物流系统的ERP系统为基础，致力于便捷、安全、稳定等方面的客户体验</span>
 	</div>
 	<div class="main-inner" id="mainCnt"
 		style="width: 900px; height: 440px; overflow: hidden; position: absolute; left: 50%; top: 50%; margin-left: -450px; margin-top: -220px; background-image: url('${pageContext.request.contextPath }/images/bg_login.jpg')">
